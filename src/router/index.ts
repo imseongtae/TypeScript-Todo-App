@@ -1,23 +1,19 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
+// import Home from '../views/Home.vue';
+import Home from '@/App.vue';
+import itemList from '@/views/item-list.vue';
+
+
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home,
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  },
+    path: '/:status?', // 여기서 다 매칭한다.
+    name: 'item-list', // name은 라우트의 키값
+    component:itemList,
+  }
 ];
 
 const router = new VueRouter({
