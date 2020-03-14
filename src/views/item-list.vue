@@ -7,32 +7,49 @@
 <script lang="ts">
 import {Vue, Component, Watch} from 'vue-property-decorator';
 import item from '@/components/item.vue';
+import { mapGetters } from 'vuex';
 
 @Component({
   components: {
     item,
-  }
+  },
+  computed: {
+    ...mapGetters([
+      'allTodoList',
+      'activeTodoList',
+      'clearTodoList',
+    ])
+  },
 })
 export default class ItemList extends Vue {
-  data: any[] = [
-    {id:0,title: 'test0',status: 'active',},
-    {id:1,title: 'test1',status: 'active',},
-    {id:2,title: 'test2',status: 'clear',},
-    {id:3,title: 'test3',status: 'active',},
-  ]
+  // data: any[] = [];
+  renderList: any[] = [];
 
-  renderList: any[] = this.data;
+  initRenderList(status: 'active' | 'clear') {
+    if (!status) {
+      this.renderList = this.allTodoList;
+    } else if (status === 'active' ) {
+      this.renderList = this.activeTodoList;
+    } else if (status === 'clear') {
+      this.renderList = this.clearTodoList;
+    }
+  }
+
+  created() {
+    //getters는 비동기로 실행이 된다.!
+    const value = this.$route.params.status;
+    this.initRenderList(value);
+  }
 
   @Watch('$route.params.status')
-  routeUpdate(newValue: string) { // 첫 번째 인자로 바뀐 새 값이 들어옴
-    if (!newValue) {
-      this.renderList = this.data;
-    } else if (newValue === 'active' || newValue === 'clear') {
-      this.renderList = this.data.filter((item: any) => {
-        return item.status === newValue;
-      })
-    }
+  routeUpdate(newValue: 'active' | 'clear') { // 첫 번째 인자로 바뀐 새 값이 들어옴
+    this.initRenderList(newValue);
+  }
 
+  @Watch('$store.state.todoList', {deep: true})
+  routeUpdate() { 
+    const value = this.$route.params.status;
+    this.initRenderList(value);
   }
 
 }

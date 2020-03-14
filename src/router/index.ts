@@ -1,7 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-// import Home from '../views/Home.vue';
-import Home from '@/App.vue';
 import itemList from '@/views/item-list.vue';
 
 
@@ -12,7 +10,7 @@ const routes = [
   {
     path: '/:status?', // 여기서 다 매칭한다.
     name: 'item-list', // name은 라우트의 키값
-    component:itemList,
+    component: itemList,
   }
 ];
 
