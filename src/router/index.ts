@@ -11,7 +11,7 @@ const routes = [
     path: '/:status?', // 여기서 다 매칭한다.
     name: 'item-list', // name은 라우트의 키값
     component: itemList,
-  }
+  },
 ];
 
 const router = new VueRouter({

@@ -20,21 +20,20 @@ export default class Item extends Vue {
   @Prop() readonly id!: string;
   @Prop() readonly title!: string;
   @Prop() readonly status!: 'active' | 'clear';
-  
+
   changeStatus($event: Event) {
-    const checked: boolean = $event.target.checked;
+    const checked: boolean = ($event.target as HTMLInputElement).checked;
 
     if (checked) {
-      this.$store.commit('changeStatus', {id: this.id, status: 'clear'})      
+      this.$store.commit('changeStatus', {id: this.id, status: 'clear'});
     } else {
-      this.$store.commit('changeStatus', {id: this.id, status: 'active'})      
+      this.$store.commit('changeStatus', {id: this.id, status: 'active'});
     }
 
   }
-  
+
   removeItem() {
-    this.$store.commit('removeItem', this.id)
+    this.$store.commit('removeItem', this.id);
   }
 }
-
 </script>

@@ -18,14 +18,18 @@ import { mapGetters } from 'vuex';
       'allTodoList',
       'activeTodoList',
       'clearTodoList',
-    ])
+    ]),
   },
 })
 export default class ItemList extends Vue {
   // data: any[] = [];
   renderList: any[] = [];
 
-  initRenderList(status: 'active' | 'clear') {
+  allTodoList!: any[];
+  activeTodoList!: any[];
+  clearTodoList!: any[];
+
+  initRenderList(status: string) {
     if (!status) {
       this.renderList = this.allTodoList;
     } else if (status === 'active' ) {
@@ -36,9 +40,8 @@ export default class ItemList extends Vue {
   }
 
   created() {
-    //getters는 비동기로 실행이 된다.!
-    const value = this.$route.params.status;
-    this.initRenderList(value);
+    // getters는 비동기로 실행이 된다.!
+    this.$store.dispatch('initData');
   }
 
   @Watch('$route.params.status')
@@ -47,15 +50,12 @@ export default class ItemList extends Vue {
   }
 
   @Watch('$store.state.todoList', {deep: true})
-  routeUpdate() { 
-    const value = this.$route.params.status;
-    this.initRenderList(value);
+  stateUpdate() {
+    const status: string = this.$route.params.status;
+    this.initRenderList(status);
   }
 
 }
-
-
-
 </script>
 
 <style scoped>

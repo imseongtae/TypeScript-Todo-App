@@ -22,12 +22,11 @@ import itemInput from '@/components/item-input.vue';
     appHeader,
     itemInput,
     // item,
-  }
+  },
 })
 export default class App extends Vue {
 
 }
-
 </script>
 
 <style>

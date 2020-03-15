@@ -16,18 +16,19 @@ import { mapState } from 'vuex';
 @Component({
   computed: mapState([
     'todoList',
-  ])
+  ]),
 })
 export default class ItemInput extends Vue {
   title: string = '';
+  todoList!: any[];
 
   addItem() {
     this.$store.commit('addItem', {
       id: this.todoList.length + 1,
-      title:this.title,
-      status:'active',
+      title: this.title,
+      status: 'active',
 
-    })
+    });
     // this.clearItem();
   }
 
@@ -35,5 +36,4 @@ export default class ItemInput extends Vue {
     this.title = '';
   }
 }
-
 </script>
